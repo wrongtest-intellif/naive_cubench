@@ -7,26 +7,9 @@
 #include <cudnn.h>
 
 #include "gflags/gflags.h"
-#include "cuda_utils.h"
+#include "utils/cuda_utils.h"
+#include "utils/cnn_forward_flags.h"
 
-
-// flags
-DEFINE_int32(height, 224, "height of image");
-DEFINE_int32(width, 224, "width of image");
-DEFINE_int32(input_channels, 256, "input channels");
-DEFINE_int32(output_channels, 256, "output channels");
-DEFINE_int32(batch_size, 1, "batch size");
-DEFINE_int32(kernel_height, 3, "height of kernel");
-DEFINE_int32(kernel_width, 3, "width of kernel");
-DEFINE_int32(padding_height, 1, "padding of height");
-DEFINE_int32(padding_width, 1, "padding of width");
-DEFINE_int32(stride_height, 1, "stride of height");
-DEFINE_int32(stride_width, 1, "stride of width");
-DEFINE_int32(dilation_height, 1, "dilation of height");
-DEFINE_int32(dilation_width, 1, "dilation of width");
-DEFINE_string(dtype, "float", "data type in [float, int8]");
-DEFINE_string(algo, "", "cnn algorithm");
-DEFINE_int32(iters, 10000, "compute iterations");
 
 
 // algorithms
@@ -61,6 +44,9 @@ int main(int argc, char** argv) {
         data_type = CUDNN_DATA_INT8x4;
         result_type = CUDNN_DATA_INT32;
         data_format = CUDNN_TENSOR_NCHW_VECT_C;
+    } else {
+        fprintf(stderr, "Invalid dtype: %s\n", FLAGS_dtype.c_str());
+        exit(1);
     }
 
     cudnnTensorDescriptor_t x_desc;
@@ -189,6 +175,6 @@ int main(int argc, char** argv) {
     auto end = std::chrono::system_clock::now();
     int64_t time = std::chrono::duration_cast<std::chrono::milliseconds>(
         end - begin).count();
-    printf("Milliseconds per iter: %f\n", time / (double)FLAGS_iters);
+    printf("Milliseconds per iter: %.3f\n", time / (double)FLAGS_iters);
     return 0;
 }

@@ -10,3 +10,5 @@ DEP_FLAGS = -I.. $(CUDA_FLAGS) $(GFLAGS_FLAGS)
 cnn_forward:
 	nvcc -std=c++11 $(DEP_FLAGS) cnn_forward.cpp -o cnn_forward -O2
 
+clean:
+	rm -f cnn_forward
