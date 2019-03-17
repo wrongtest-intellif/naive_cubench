@@ -20,6 +20,12 @@ DEFINE_int32(dilation_height, 1, "dilation of height");
 DEFINE_int32(dilation_width, 1, "dilation of width");
 DEFINE_string(dtype, "float", "data type in [float, int8]");
 DEFINE_string(algo, "", "cnn algorithm");
-DEFINE_int32(iters, 10000, "compute iterations");
+DEFINE_int32(iters, 1000, "compute iterations");
+
+// for fused op
+DEFINE_int32(enable_fuse, 1, "Whether do a fused computation on needed");
+DEFINE_int32(do_bias, 1, "Whether add bias in fused op");
+DEFINE_int32(do_relu, 1, "Whether do relu activation in fused op");
+DEFINE_int32(do_add, 1, "Whether add bypass part in fused op");
 
 #endif  // __CNN_FORWARD_FLAGS_H__
