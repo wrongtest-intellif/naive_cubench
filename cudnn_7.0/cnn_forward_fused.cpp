@@ -77,17 +77,17 @@ int main(int argc, char** argv) {
     cudnnConvolutionDescriptor_t conv_desc;
     CHECK_CUDNN(cudnnCreateConvolutionDescriptor(&conv_desc));
     CHECK_CUDNN(cudnnSetConvolutionMathType(conv_desc, 
-    	CUDNN_DEFAULT_MATH));
+        CUDNN_DEFAULT_MATH));
     CHECK_CUDNN(cudnnSetConvolutionGroupCount(conv_desc, 1));
     CHECK_CUDNN(cudnnSetConvolution2dDescriptor(conv_desc,
-    	FLAGS_padding_height, FLAGS_padding_width, 
+        FLAGS_padding_height, FLAGS_padding_width, 
         FLAGS_stride_height, FLAGS_stride_width, 
         FLAGS_dilation_height, FLAGS_dilation_width,
         CUDNN_CONVOLUTION, result_type));
 
     int n, c, height, width;
     CHECK_CUDNN(cudnnGetConvolution2dForwardOutputDim(conv_desc,
-    	x_desc, w_desc, &n, &c, &height, &width));
+        x_desc, w_desc, &n, &c, &height, &width));
     printf("Intput dimensions: [%d, %d, %d, %d]\n", 
         FLAGS_batch_size, FLAGS_input_channels, FLAGS_height, FLAGS_width);
     printf("Kernel dimensions: [%d, %d, %d, %d]\n",
