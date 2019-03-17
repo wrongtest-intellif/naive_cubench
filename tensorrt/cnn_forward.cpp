@@ -81,10 +81,12 @@ int main(int argc, char** argv) {
 		context->execute(FLAGS_batch_size, buffers.data());
 	}
 
+    cudaDeviceSynchronize();
 	auto begin = std::chrono::system_clock::now();
 	for (int i = 0; i < FLAGS_iters; ++i) {
 		context->execute(FLAGS_batch_size, buffers.data());
 	}
+    cudaDeviceSynchronize();
 	auto end = std::chrono::system_clock::now();
 	int64_t time = std::chrono::duration_cast<std::chrono::milliseconds>(
 		end - begin).count();

@@ -155,6 +155,7 @@ int main(int argc, char** argv) {
         y_desc,
         y));
 
+    cudaDeviceSynchronize();
     auto begin = std::chrono::system_clock::now();
     for (int i = 0; i < FLAGS_iters; ++i) {
         CHECK_CUDNN(cudnnConvolutionForward(
@@ -172,6 +173,7 @@ int main(int argc, char** argv) {
             y_desc,
             y));
     }
+    cudaDeviceSynchronize();
     auto end = std::chrono::system_clock::now();
     int64_t time = std::chrono::duration_cast<std::chrono::milliseconds>(
         end - begin).count();
